@@ -54,4 +54,19 @@ FROM project
 
 --EXEC sp_help 'project';
 
+--task table creation
+CREATE TABLE task(
+	task_id INT IDENTITY(1,1) PRIMARY KEY,
+	task_name VARCHAR(150) NOT NULL,
+	descriptions VARCHAR(255) NOT NULL,
+	starts_date DATE NOT NULL,
+	due_date DATE NOT NULL,
+		--Constraints for end date field
+	    CONSTRAINT CHECK_end_date_After_starts_date 
+          CHECK (due_date >= starts_date),
+	prioritys VARCHAR(150) 
+		CONSTRAINT CK_Task_Priority CHECK (prioritys IN ('Low', 'Medium', 'High')),
+	statuss VARCHAR(70) DEFAULT 'Pending',
+	project_id INT FOREIGN KEY REFERENCES project(project_id)
+);
 
