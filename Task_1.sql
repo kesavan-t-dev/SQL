@@ -7,13 +7,6 @@ use kesavan_db
 GO
 
 
-/*
-CREATE TABLE Employees (
-   EmployeeID INT IDENTITY(1,1) PRIMARY KEY,
-   FirstName VARCHAR(50),
-   LastName VARCHAR(50)
-);
-*/
 --Project Table
 CREATE TABLE project
 (
@@ -62,7 +55,7 @@ CREATE TABLE task(
 	starts_date DATE NOT NULL,
 	due_date DATE NOT NULL,
 		--Constraints for end date field
-	    CONSTRAINT CHECK_end_date_After_starts_date 
+	    CONSTRAINT CHECK_due_date_After_starts_date 
           CHECK (due_date >= starts_date),
 	prioritys VARCHAR(150) 
 		CONSTRAINT CK_Task_Priority CHECK (prioritys IN ('Low', 'Medium', 'High')),
@@ -70,3 +63,30 @@ CREATE TABLE task(
 	project_id INT FOREIGN KEY REFERENCES project(project_id)
 );
 
+-- Insert sample data into the Task table
+
+INSERT INTO task (task_name, descriptions, starts_date, due_date, prioritys, statuss, project_id)
+VALUES 
+    ('Initial Design', 'Design phase for the new website', '2024-01-02', '2024-02-28', 'High', 'Completed', 1),
+    ('UI Development', 'Development of user interface components', '2024-03-01', '2024-05-15', 'Medium', 'In Progress', 1),
+    ('Quality Assurance', 'Testing and quality assurance', '2024-05-16', '2024-06-15', 'High', 'Pending', 1),
+    ('API Development', 'Developing APIs for the mobile app', '2024-02-16', '2024-04-30', 'Medium', 'Completed', 2),
+    ('Beta Testing', 'Conducting beta testing for the mobile app', '2024-05-01', '2024-06-30', 'High', 'In Progress', 2),
+    ('Survey Analysis', 'Analyzing market research surveys', '2024-03-02', '2024-04-15', 'Low', 'Completed', 3),
+    ('Report Drafting', 'Drafting the final report based on research', '2024-04-16', '2024-05-30', 'Medium', 'Pending', 3),
+    ('Financial Statements', 'Preparing financial statements for the annual report', '2024-04-02', '2024-07-15', 'High', 'In Progress', 4),
+    ('Final Review', 'Final review and submission of the annual report', '2024-07-16', '2024-12-15', 'High', 'Pending', 4),
+    ('Client Feedback Incorporation', 'Incorporating feedback from the client into the project', '2024-02-01', '2024-03-15', 'Medium', 'In Progress', 1),
+    ('Launch Preparation', 'Preparing for the official launch of the mobile app', '2024-06-01', '2024-07-01', 'High', 'Pending', 2);
+
+GO
+
+--Display Output
+SELECT * 
+FROM task;
+GO
+--check
+SELECT * 
+FROM task
+WHERE project_id = 3;
+GO
